@@ -7,17 +7,17 @@ import {
   faGlobe,
   faShare,
 } from "@fortawesome/free-solid-svg-icons";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const DigitalMarketingLanding = () => {
   const [showQR, setShowQR] = useState(false);
 
   const handleCall = () => {
-    window.location.href = "tel:+919826050902";
+    window.location.href = "tel:+919669143999";
   };
 
   const handleWhatsApp = () => {
-    window.location.href = "https://wa.me/919826050902";
+    window.location.href = "https://wa.me/9669143999";
   };
 
   const handleEmail = () => {
@@ -25,12 +25,19 @@ const DigitalMarketingLanding = () => {
   };
 
   const handleMap = () => {
-    window.location.href = "https://maps.app.goo.gl/Z9zZvvBg4dVzkMrv7";
+    window.location.href = "https://maps.app.goo.gl/cM2BmyXpMEWFvaQ2A";
   };
 
   const handleWebsite = () => {
     window.location.href = "https://theparallelpanda.com";
   };
+
+  const handleInstagram = () => {
+    window.location.href =
+      "https://www.instagram.com/shri_ganesh_bakery__/?hl=en";
+  };
+
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -49,14 +56,14 @@ const DigitalMarketingLanding = () => {
           <h1
             className="text-3xl mb-2 text-[#5d545e]"
             style={{ fontFamily: "Satoshi-Black" }}
-          >
-
-          </h1>
+          ></h1>
           <h2
             className="text-xl mb-8 text-[#5d545e]"
             style={{ fontFamily: "Satoshi-Medium" }}
           >
-            Digital Marketing Agency
+            <strong>NEW GANESH BAKERS</strong>
+            <br />
+            GST No. 23ABBPH4681A1ZA
           </h2>
         </div>
       </div>
@@ -99,6 +106,15 @@ const DigitalMarketingLanding = () => {
               />
             </button>
             <button
+              onClick={handleInstagram}
+              className="bg-[#f5d6ff] p-4 rounded-full hover:bg-opacity-90 w-12 h-12 flex items-center justify-center"
+            >
+              <FontAwesomeIcon
+                icon={faInstagram}
+                className="w-5 h-5 text-[#5d545e]"
+              />
+            </button>
+            {/* <button
               onClick={handleEmail}
               className="bg-[#fff6d6] p-4 rounded-full hover:bg-opacity-90 w-12 h-12 flex items-center justify-center"
             >
@@ -106,7 +122,7 @@ const DigitalMarketingLanding = () => {
                 icon={faEnvelope}
                 className="w-5 h-5 text-[#5d545e]"
               />
-            </button>
+            </button> */}
             <button
               onClick={handleMap}
               className="bg-[#d6e6ff] p-4 rounded-full hover:bg-opacity-90 w-12 h-12 flex items-center justify-center"
@@ -116,7 +132,7 @@ const DigitalMarketingLanding = () => {
                 className="w-5 h-5 text-[#5d545e]"
               />
             </button>
-            <button
+            {/* <button
               onClick={handleWebsite}
               className="bg-[#f5d6ff] p-4 rounded-full hover:bg-opacity-90 w-12 h-12 flex items-center justify-center"
             >
@@ -124,18 +140,18 @@ const DigitalMarketingLanding = () => {
                 icon={faGlobe}
                 className="w-5 h-5 text-[#5d545e]"
               />
-            </button>
+            </button> */}
           </div>
 
           <div className="text-center mt-8">
-            <button
+            {/* <button
               onClick={() => setShowQR(!showQR)}
               className="bg-[#ffe461] px-6 py-3 rounded-lg hover:bg-opacity-90 text-[#5d545e]"
               style={{ fontFamily: "Satoshi-Medium" }}
             >
               Scan QR Code
-            </button>
-            {showQR && (
+            </button> */}
+            {/* {showQR && (
               <div className="mt-4">
                 <img
                   src="/qr.png"
@@ -143,7 +159,7 @@ const DigitalMarketingLanding = () => {
                   className="mx-auto w-48 h-48"
                 />
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -164,15 +180,16 @@ const DigitalMarketingLanding = () => {
             className="text-lg leading-relaxed text-[#5d545e]"
             style={{ fontFamily: "Satoshi-Regular" }}
           >
-            A <strong>digital marketing engine</strong> fueled by{" "}
-            <strong>27 years of mastery</strong>. From driving{" "}
-            <em>targeted leads</em> through Google and Meta ads to igniting
-            connections via email and WhatsApp marketing, we deliver a full
-            suite of tailored solutions. With{" "}
-            <strong>bespoke SEO strategies</strong> and a commitment to
-            transparency, we guarantee growth without the guesswork. Let us
-            handle the complexity while you focus on what matters most—
-            <strong>elevating your business</strong>.
+            A <strong>legacy of excellence</strong> in baking since{" "}
+            <strong>1990</strong>. From our signature{" "}
+            <em>Tutti Frutti Bread Cake</em> to rich <em>Choco Bread Cake</em>
+            and crispy <em>Cake Rusk</em>, we craft each product with unmatched
+            quality and passion. Based in{" "}
+            <strong>Indore, Madhya Pradesh</strong>, we are a trusted name in
+            the industry, supplying in bulk to meet your needs. With a
+            commitment to <strong>taste, tradition, and trust</strong>, we
+            ensure every bite delivers delight. Let us be your partner in
+            bringing the finest baked goods to your customers.
           </p>
         </div>
       </div>
@@ -184,7 +201,7 @@ const DigitalMarketingLanding = () => {
             className="text-lg text-white"
             style={{ fontFamily: "Satoshi-Black" }}
           >
-            Key Projects
+            Photo Gallery
           </p>
         </div>
       </div>
@@ -197,17 +214,20 @@ const DigitalMarketingLanding = () => {
           width: "100vw",
         }}
       >
+        <div className="py-6 flex justify-center bg-transparent px-4">
+          <img
+            src="/alpha.jpeg"
+            alt="Alpha Image"
+            className="w-auto h-80 object-contain rounded-lg "
+          />
+        </div>
         <div className="container mx-auto px-4 text-center">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {[
-              "a.png",
-              "b.png",
-              "c.png",
-              "1.png",
-              "2.png",
-              "3.png",
-              "4.png",
-              "5.png",
+              "a.jpg",
+              "b.jpg",
+              "c.jpg",
+              // "1.jpg",
             ].map((img, index) => (
               <img
                 key={index}
@@ -231,7 +251,7 @@ const DigitalMarketingLanding = () => {
               });
             }
           }}
-          className="flex items-center gap-2 bg-[#ffe461] px-6 py-3 rounded-full shadow-lg hover:bg-opacity-90 text-[#5d545e]"
+          className="flex items-center gap-2 bg-[#c4ccff] px-6 py-3 rounded-full shadow-lg hover:bg-opacity-90 text-[#5d545e]"
           style={{ fontFamily: "Satoshi-Medium" }}
         >
           <FontAwesomeIcon icon={faShare} className="w-5 h-5" /> Share this card
