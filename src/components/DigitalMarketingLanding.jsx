@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPhone,
@@ -6,11 +6,32 @@ import {
   faLocationDot,
   faGlobe,
   faShare,
+  faArrowLeft,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp, faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const DigitalMarketingLanding = () => {
   const [showQR, setShowQR] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Product images array
+  const productImages = Array.from({ length: 11 }, (_, i) => `/p${i + 1}.jpeg`);
+
+  // Number of images to show in one slide (for desktop and mobile)
+  const imagesPerSlide = window.innerWidth >= 768 ? 3 : 1;
+
+  // Total number of slides
+  const totalSlides = Math.ceil(productImages.length / imagesPerSlide);
+
+  // Auto-scroll functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % totalSlides);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [totalSlides]);
 
   const handleCall = () => {
     window.location.href = "tel:+919669143999";
@@ -37,7 +58,19 @@ const DigitalMarketingLanding = () => {
       "https://www.instagram.com/shri_ganesh_bakery__/?hl=en";
   };
 
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  };
 
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  };
+
+  // Function to get the current slide's images
+  const getCurrentSlideImages = () => {
+    const startIdx = currentSlide * imagesPerSlide;
+    return productImages.slice(startIdx, startIdx + imagesPerSlide);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -114,15 +147,6 @@ const DigitalMarketingLanding = () => {
                 className="w-5 h-5 text-[#5d545e]"
               />
             </button>
-            {/* <button
-              onClick={handleEmail}
-              className="bg-[#fff6d6] p-4 rounded-full hover:bg-opacity-90 w-12 h-12 flex items-center justify-center"
-            >
-              <FontAwesomeIcon
-                icon={faEnvelope}
-                className="w-5 h-5 text-[#5d545e]"
-              />
-            </button> */}
             <button
               onClick={handleMap}
               className="bg-[#d6e6ff] p-4 rounded-full hover:bg-opacity-90 w-12 h-12 flex items-center justify-center"
@@ -132,34 +156,18 @@ const DigitalMarketingLanding = () => {
                 className="w-5 h-5 text-[#5d545e]"
               />
             </button>
-            {/* <button
-              onClick={handleWebsite}
-              className="bg-[#f5d6ff] p-4 rounded-full hover:bg-opacity-90 w-12 h-12 flex items-center justify-center"
-            >
-              <FontAwesomeIcon
-                icon={faGlobe}
-                className="w-5 h-5 text-[#5d545e]"
-              />
-            </button> */}
           </div>
 
+          {/* Address added above location/map image */}
           <div className="text-center mt-8">
-            {/* <button
-              onClick={() => setShowQR(!showQR)}
-              className="bg-[#ffe461] px-6 py-3 rounded-lg hover:bg-opacity-90 text-[#5d545e]"
+            <p
+              className="text-lg mb-4 text-[#5d545e]"
               style={{ fontFamily: "Satoshi-Medium" }}
             >
-              Scan QR Code
-            </button> */}
-            {/* {showQR && (
-              <div className="mt-4">
-                <img
-                  src="/qr.png"
-                  alt="QR Code"
-                  className="mx-auto w-48 h-48"
-                />
-              </div>
-            )} */}
+              <strong>
+                33, Joshi Colony, Navlakha, Indore, Madhya Pradesh 452001, India
+              </strong>
+            </p>
           </div>
         </div>
       </div>
@@ -194,17 +202,6 @@ const DigitalMarketingLanding = () => {
         </div>
       </div>
 
-      {/* Key Projects Section */}
-      <div className="bg-[#5d545e] py-6">
-        <div className="container mx-auto px-4 text-center">
-          <p
-            className="text-lg text-white"
-            style={{ fontFamily: "Satoshi-Black" }}
-          >
-            Photo Gallery
-          </p>
-        </div>
-      </div>
       <div
         className="py-12 w-full"
         style={{
@@ -218,23 +215,123 @@ const DigitalMarketingLanding = () => {
           <img
             src="/alpha.jpeg"
             alt="Alpha Image"
-            className="w-auto h-80 object-contain rounded-lg "
+            className="w-auto h-80 object-contain rounded-lg"
           />
         </div>
-        <div className="container mx-auto px-4 text-center">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {[
-              "a.jpg",
-              "b.jpg",
-              "c.jpg",
-              // "1.jpg",
-            ].map((img, index) => (
-              <img
-                key={index}
-                src={`/${img}`}
-                alt={`Project ${index + 1}`}
-                className="w-full h-64 object-cover rounded-lg shadow-lg"
+        <div className="bg-[#5d545e] py-6">
+          <div className="container mx-auto px-4 text-center">
+            <p
+              className="text-lg text-white"
+              style={{ fontFamily: "Satoshi-Black" }}
+            >
+              Our Products
+            </p>
+          </div>
+        </div>
+
+        {/* Product Carousel */}
+        <div className="container mx-auto px-4 mt-8">
+          <div className="relative">
+            {/* Carousel container */}
+            <div className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {/* Generate all slides */}
+                {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                  <div key={slideIndex} className="w-full flex-shrink-0">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      {productImages
+                        .slice(
+                          slideIndex * imagesPerSlide,
+                          (slideIndex + 1) * imagesPerSlide
+                        )
+                        .map((img, imgIndex) => (
+                          <div
+                            key={imgIndex}
+                            className="bg-white bg-opacity-40 backdrop-blur-md p-4 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 hover:bg-opacity-60"
+                            style={{
+                              backdropFilter: "blur(10px)",
+                              WebkitBackdropFilter: "blur(10px)",
+                              border: "1px solid rgba(255, 255, 255, 0.2)",
+                            }}
+                          >
+                            <img
+                              src={img}
+                              alt={`Bakery Product`}
+                              className="w-full h-64 object-cover rounded-md"
+                            />
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Navigation arrows */}
+            <button
+              onClick={prevSlide}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full hover:scale-110 transition-transform duration-200"
+            >
+              <FontAwesomeIcon
+                icon={faArrowLeft}
+                className="w-6 h-6 text-[#5d545e]"
               />
+            </button>
+            <button
+              onClick={nextSlide}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white bg-opacity-50 hover:bg-opacity-75 p-2 rounded-full hover:scale-110 transition-transform duration-200"
+            >
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className="w-6 h-6 text-[#5d545e]"
+              />
+            </button>
+
+            {/* Dots indicator */}
+            <div className="flex justify-center mt-4">
+              {Array.from({ length: totalSlides }).map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full mx-1 transition-all duration-200 ${
+                    currentSlide === index
+                      ? "bg-[#5d545e] scale-125"
+                      : "bg-gray-300"
+                  }`}
+                ></button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Product Grid for larger screens */}
+        <div className="container mx-auto px-4 mt-12 hidden lg:block">
+          <h3
+            className="text-xl mb-6 text-center text-[#5d545e]"
+            style={{ fontFamily: "Satoshi-Black" }}
+          >
+            Browse All Products
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {productImages.map((img, index) => (
+              <div
+                key={index}
+                className="bg-white bg-opacity-40 backdrop-blur-md p-4 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl hover:scale-105 hover:bg-opacity-60 cursor-pointer"
+                style={{
+                  backdropFilter: "blur(10px)",
+                  WebkitBackdropFilter: "blur(10px)",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                }}
+              >
+                <img
+                  src={img}
+                  alt={`Bakery Product`}
+                  className="w-full h-48 object-cover rounded-md"
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -246,13 +343,18 @@ const DigitalMarketingLanding = () => {
           onClick={() => {
             if (navigator.share) {
               navigator.share({
-                title: "Digital Marketing Agency",
+                title: "New Ganesh Bakers",
                 url: window.location.href,
               });
             }
           }}
-          className="flex items-center gap-2 bg-[#c4ccff] px-6 py-3 rounded-full shadow-lg hover:bg-opacity-90 text-[#5d545e]"
-          style={{ fontFamily: "Satoshi-Medium" }}
+          className="flex items-center gap-2 bg-[#c4ccff] backdrop-blur-sm bg-opacity-70 px-6 py-3 rounded-full shadow-lg hover:bg-opacity-90 text-[#5d545e] transition-all duration-300 hover:scale-105"
+          style={{
+            fontFamily: "Satoshi-Medium",
+            backdropFilter: "blur(5px)",
+            WebkitBackdropFilter: "blur(5px)",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+          }}
         >
           <FontAwesomeIcon icon={faShare} className="w-5 h-5" /> Share this card
         </button>
